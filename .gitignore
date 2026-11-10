@@ -1,0 +1,36 @@
+
+# macOS
+.DS_Store
+
+# Xcode user data and generated artifacts
+xcuserdata/
+*.xcuserstate
+DerivedData/
+build/
+*.xcresult/
+*.xcarchive/
+*.ipa
+*.dSYM/
+*.dSYM.zip
+
+# Swift Package Manager
+.build/
+# Keep Package.resolved tracked for reproducible builds.
+
+# Developer-local configuration and credentials
+.env
+.env.*
+!.env.example
+Secrets.xcconfig
+Local.xcconfig
+*.p8
+*.p12
+*.pem
+*.key
+*.mobileprovision
+
+# Local test and coverage output
+coverage/
+*.profraw
+*.profdata
+
