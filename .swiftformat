@@ -1,0 +1,24 @@
+# WeatherWise AI - SwiftFormat Configuration
+# Baseline: SwiftFormat 0.63.0
+
+# Swift Language
+--swiftversion 6.0
+
+# Indentation
+--indent 4
+--allman false
+
+# Line Formatting
+--linebreaks lf
+--maxwidth 120
+--trimwhitespace always
+
+# Wrapping
+--wraparguments preserve
+--wrapcollections preserve
+
+# File Headers
+--header ignore
+
+# Excluded Directories
+--exclude .build,build,DerivedData
