@@ -1,0 +1,97 @@
+name: iOS CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Lint, Format, Build and Unit Tests
+    runs-on: xcode-27
+    timeout-minutes: 35
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify Xcode environment
+        run: |
+          xcodebuild -version
+          xcrun simctl list devices available
+
+      - name: Install pinned quality tools
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          TOOLS_DIR="$RUNNER_TEMP/weatherwise-tools"
+          mkdir -p "$TOOLS_DIR/swiftlint"
+          mkdir -p "$TOOLS_DIR/swiftformat"
+
+          curl -fsSL --retry 3 \
+            https://github.com/realm/SwiftLint/releases/download/0.65.0/portable_swiftlint.zip \
+            -o "$TOOLS_DIR/swiftlint.zip"
+
+          unzip -q "$TOOLS_DIR/swiftlint.zip" \
+            -d "$TOOLS_DIR/swiftlint"
+
+          curl -fsSL --retry 3 \
+            https://github.com/nicklockwood/SwiftFormat/releases/download/0.63.0/swiftformat.zip \
+            -o "$TOOLS_DIR/swiftformat.zip"
+
+          unzip -q "$TOOLS_DIR/swiftformat.zip" \
+            -d "$TOOLS_DIR/swiftformat"
+
+          SWIFTLINT_BIN=$(find "$TOOLS_DIR/swiftlint" -type f -name swiftlint -print -quit)
+          SWIFTFORMAT_BIN=$(find "$TOOLS_DIR/swiftformat" -type f -name swiftformat -print -quit)
+
+          test -n "$SWIFTLINT_BIN"
+          test -n "$SWIFTFORMAT_BIN"
+
+          chmod +x "$SWIFTLINT_BIN" "$SWIFTFORMAT_BIN"
+
+          echo "SWIFTLINT_BIN=$SWIFTLINT_BIN" >> "$GITHUB_ENV"
+          echo "SWIFTFORMAT_BIN=$SWIFTFORMAT_BIN" >> "$GITHUB_ENV"
+
+          "$SWIFTLINT_BIN" version
+          "$SWIFTFORMAT_BIN" --version
+
+      - name: Run SwiftLint
+        run: |
+          "$SWIFTLINT_BIN" lint --config .swiftlint.yml
+
+      - name: Run SwiftFormat
+        run: |
+          "$SWIFTFORMAT_BIN" --lint . --config .swiftformat
+
+      - name: Build iOS application
+        run: |
+          xcodebuild build \
+            -project WeatherWiseAI.xcodeproj \
+            -scheme WeatherWiseAI \
+            -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Run unit tests
+        run: |
+          xcodebuild test \
+            -project WeatherWiseAI.xcodeproj \
+            -scheme WeatherWiseAI \
+            -configuration Debug \
+            -destination 'platform=iOS Simulator,name=iPhone 18 Pro,OS=latest' \
+            -parallel-testing-enabled NO \
+            -only-testing:WeatherWiseAITests \
+            CODE_SIGNING_ALLOWED=NO
