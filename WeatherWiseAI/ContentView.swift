@@ -18,23 +18,25 @@ struct ContentView: View {
         case selectCity
         case currentLocation
 
-        var id: Self { self }
+        var id: Self {
+            self
+        }
 
         var title: String {
             switch self {
             case .selectCity:
-                return "Selecionar cidade"
+                "Selecionar cidade"
             case .currentLocation:
-                return "Minha localização"
+                "Minha localização"
             }
         }
 
         var message: String {
             switch self {
             case .selectCity:
-                return "A seleção manual de cidade estará disponível em breve."
+                "A seleção manual de cidade estará disponível em breve."
             case .currentLocation:
-                return "A localização será solicitada somente quando esse recurso estiver disponível e você decidir utilizá-lo."
+                "A localização será solicitada somente quando esse recurso estiver disponível e você decidir utilizá-lo."
             }
         }
     }
