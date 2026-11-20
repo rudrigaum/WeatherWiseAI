@@ -1,0 +1,33 @@
+# WeatherWise AI - Git Attributes
+# Normalize text files and preserve binary assets.
+
+# Automatically detect text files.
+* text=auto
+
+# Source code and scripts.
+*.swift text eol=lf
+*.sh text eol=lf
+
+# Documentation and configuration.
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.xcconfig text eol=lf
+
+# Xcode project and workspace files.
+*.pbxproj text eol=lf
+*.xcscheme text eol=lf
+*.xcworkspacedata text eol=lf
+*.plist text eol=lf
+*.xcstrings text eol=lf
+
+# Binary assets.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.heic binary
+*.pdf binary
+*.zip binary
+
