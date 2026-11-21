@@ -1,4 +1,3 @@
-
 # WeatherWise AI 🌤️
 
 **Plan smarter. Let the weather guide your decisions.**
@@ -7,7 +6,7 @@ WeatherWise AI is a native mobile project designed to help people plan activitie
 
 Instead of simply displaying weather forecasts, the application aims to transform reliable weather information into practical guidance.
 
-> **Project Status:** Early development. The iOS foundation, Design System v1.0, code quality tooling, and CI pipeline are implemented. The initial Home interface and tab navigation are available in [PR #7](https://github.com/rudrigaum/WeatherWiseAI/pull/7). Real weather data and AI integration are not implemented yet.
+> **Project Status:** Early development. The iOS foundation, Design System v1.0, code quality tooling, and CI pipeline are implemented. The initial Home interface and native tab navigation have been merged into `main` through [PR #7](https://github.com/rudrigaum/WeatherWiseAI/pull/7). Weather values remain illustrative; real meteorological data and AI integration are not implemented yet.
 
 ## Overview
 
@@ -32,7 +31,7 @@ The application will interpret the user's plans, identify relevant dates and loc
 - GitHub Actions for lint, format verification, build, and unit tests.
 - Swift Testing and XCTest test targets.
 
-### Home Screen — PR #7
+### Home Screen
 
 The initial Home implementation includes:
 
@@ -83,7 +82,7 @@ Display detailed forecasts and relevant weather indicators. Provide clearly labe
 | Location | Core Location | Planned |
 | AI Integration | Secure backend / API gateway | Planned |
 | Unit Testing | Swift Testing | Configured |
-| UI Testing | XCTest / XCUIAutomation | Functional coverage in PR #7 |
+| UI Testing | XCTest / XCUIAutomation | Home navigation test implemented |
 | Code Quality | SwiftLint / SwiftFormat | Configured |
 | CI | GitHub Actions | Implemented |
 | Static Analysis | SonarQube Cloud | Planned |
@@ -188,7 +187,7 @@ Build with **Product > Build** or `Command + B`.
 
 Run with **Product > Run** or `Command + R`.
 
-The default branch may differ from open feature branches. See the Pull Requests section on GitHub for ongoing work.
+The current Home screen displays illustrative weather values. Live forecasts are not available yet.
 
 ### Command-Line Build
 
@@ -232,7 +231,7 @@ The project uses:
 
 To run tests locally, open Xcode, select an available simulator, and use **Product > Test**.
 
-The navigation UI test introduced in PR #7 covers Home actions and navigation among the main tabs.
+The navigation UI test introduced in [PR #7](https://github.com/rudrigaum/WeatherWiseAI/pull/7) covers Home actions and navigation among the main tabs.
 
 UI tests are not currently included in the default CI workflow.
 
@@ -254,7 +253,7 @@ Upcoming test coverage will focus on weather mapping, date interpretation, locat
 
 ### Application
 
-- [ ] Integrate initial Home and tab navigation into `main` (PR #7).
+- [x] Integrate initial Home and tab navigation into `main` (PR #7).
 - [ ] Integrate Open-Meteo forecasts.
 - [ ] Implement manual city selection.
 - [ ] Implement optional device location.
